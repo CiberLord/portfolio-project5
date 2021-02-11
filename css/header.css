@@ -1,0 +1,119 @@
+.header {
+    padding-top: 55px;
+    background: linear-gradient(127.04deg, #FFC42C 4.95%, #FFAA2C 68.7%);
+}
+
+/* logo item */
+
+.logo__container {
+    display: flex;
+    align-items: flex-start
+}
+
+.logo {
+    width: 33px;
+    height: 39.5px;
+    background-image: url(../img/logo-bg.svg);
+    position: relative;
+    background-position: 43% 90%;
+    margin-right: 10px;
+}
+
+.logo img {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.logo__text {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    text-transform: uppercase;
+}
+
+.menu {
+    display: flex;
+}
+
+/* menu ul */
+
+.menu__list {
+    display: flex;
+}
+
+.menu__item+.menu__item {
+    margin: 0 20px;
+}
+
+.menu__item {
+    padding: 8px 13px;
+}
+
+.menu__item a {
+    color: #000;
+    transition: all .3s;
+    display: inline-block;
+    position: relative;
+}
+
+.menu__item a:hover {
+    font-weight: 500;
+}
+
+.selet__item {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.32);
+}
+
+.selet__item a {
+    font-weight: 500 !important;
+}
+
+/* contacts a*/
+
+.phone__contact {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000;
+}
+
+/* shop container */
+
+.shop__list {
+    display: flex;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.shop__icon {
+    width: 35px;
+    height: 35px;
+    background-color: #000;
+    border-radius: 50%;
+    position: relative;
+    margin-right: 10px;
+}
+
+.shop__icon img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.money__value {
+    display: inline-block;
+}
+
+.polygon {
+    display: inline-block;
+    width: 10px;
+    height: 8px;
+    background-image: url(../img/polygon.svg);
+}

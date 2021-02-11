@@ -1,0 +1,37 @@
+/* 
+    font-family: 'Montserrat', sans-serif;
+*/
+@import './fonts.css';
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+ul,li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+button,input,textarea{
+    outline: none;
+    border: none;
+}
+textarea{
+    resize: none;
+}
+img{
+    display: block;
+}
+
+.bg-config{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0px 0px;
+}
+.row-padding{
+    padding-left: 135px;
+    padding-right: 135px;
+}
