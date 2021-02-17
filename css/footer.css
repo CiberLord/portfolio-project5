@@ -26,9 +26,8 @@
     resize: none;
     width: 100%;
     height: 130px;
-}
-.message{
-    cursor: text;
+    position: relative;
+    z-index: 10000;
 }
 .mr{
     margin-right: 100px;
@@ -38,6 +37,7 @@
 }
 .footer img{
     position: absolute;
+    z-index: 0;
 }
 .light1{
     left: -200px;

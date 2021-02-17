@@ -10,6 +10,8 @@
         rel="stylesheet">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="css/slick.css">
+    <link rel="stylesheet" href="css/gallery-view.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/about.css">
@@ -159,22 +161,22 @@
             <div class="row">
                 <div class="col-12">
                     <ul class="catalog__filter">
-                        <li type='all' active class="filter-button active-filter">
+                        <li filter='all' class="filter-button active-filter">
                             Все
                         </li>
-                        <li type='dogs' active class="filter-button">
+                        <li filter='dogs' class="filter-button">
                             Собаки
                         </li>
-                        <li type='cats' active class="filter-button">
+                        <li filter='cats' class="filter-button">
                             Кошки
                         </li>
-                        <li type='rats' active class="filter-button">
+                        <li filter='rats' class="filter-button">
                             Хомячки
                         </li>
-                        <li type='birds' active class="filter-button">
+                        <li filter='birds'  class="filter-button">
                             Попугаи
                         </li>
-                        <li type='fish' active class="filter-button">
+                        <li filter='fish' class="filter-button">
                             Рыбки
                         </li>
                     </ul>
@@ -182,24 +184,6 @@
             </div>
             <div class="catalog__content">
                 <div class="catalog__slider">
-                    <div class="catalog__item">
-                        <div class="catalog__date">
-                            <span value="date" class="c-date-number">8</span><span>месяцев</span><span value="awards"
-                                class="c-date-number">4</span><span>награды</span>
-                        </div>
-                        <img src="img/catalog-img1.png" alt="">
-                        <h3>Доберман</h3>
-                        <p>
-                            Отличный новый друг для всей семьи, охраняет и обожает
-                        </p>
-                        <div class="filters">
-                            <span class="type-round"></span>
-                            <span class="type">собаки</span>
-                            <span class="breed-round"></span>
-                            <span class="breed">породистая</span>
-                        </div>
-                        <div class="item__price">6899 p.</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -303,6 +287,31 @@
             </form>
         </div>
     </footer>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/gallery-view.js"></script>
+    <script src="js/slick.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
+
+<!-- 
+    <div class="catalog__item">
+                        <div class="catalog__date">
+                            <span class="c-date-number">8</span><span>месяцев</span><span class="c-date-number">4</span><span>награды</span>
+                        </div>
+                        <img src="img/catalog-img1.png" alt="">
+                        <h3>Доберман</h3>
+                        <p>
+                            Отличный новый друг для всей семьи, охраняет и обожает
+                        </p>
+                        <div class="filters">
+                            <span class="type-round"></span>
+                            <span class="type">собаки</span>
+                            <span class="breed-round"></span>
+                            <span class="breed">породистая</span>
+                        </div>
+                        <div class="item__price">6899 p.</div>
+                    </div>
+ -->

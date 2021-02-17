@@ -1,0 +1,36 @@
+/* конетейнер в котором будут находится галлерея имеет полупрозрачный фон */
+.g-layout{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgba(0,0,0,0.7);
+    box-sizing: border-box;
+    padding: 0 !important;
+    opacity: 0;
+}
+
+/* размер контейнера для изображений */
+.g-item{
+    width: 800px !important;
+    height: 450px !important;
+    position: relative;
+    background-color: #000 !important;
+    display: block;
+    margin: 0!important;
+}
+.g-item img{
+    object-fit: cover;
+}
+
+.gw-exit-button{
+    display: block;
+    /* position:absolute;
+    top: 0px;
+    right: 0px; */
+
+}
