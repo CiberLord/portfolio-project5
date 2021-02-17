@@ -1,0 +1,44 @@
+.our__team {
+    background: #FFF4BB;
+    padding-top: 110px;
+    padding-bottom: 180px;
+    position: relative;
+}
+
+.our__team-title2 {
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 26px 0;
+}
+
+.our__team-text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+.read__more{
+    background-color: transparent;
+    margin-top: 61px;
+    color: #FF1A27;
+    font-weight: bold;
+}
+.read__more>i{
+    display: inline-block;
+    width: 8px;
+    height:8px;
+    background-image: url(../img/read-arrow.svg);
+    background-position:  center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.dog-f{
+    position: absolute;
+    right: 35px;
+    top: 28px;
+}
+.lapki{
+    position: absolute;
+    bottom: 0px;
+    left: 30px;
+}

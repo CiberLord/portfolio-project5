@@ -1,0 +1,53 @@
+.footer{
+    background-color: #000;
+    padding: 90px 0;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+.form{
+    max-width: 900px;
+}
+.input{
+    width: 100%;
+    background-color: transparent;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    padding-bottom: 30px;
+}
+.switch-theme{
+    border-bottom: 1px solid #fff;
+    padding-bottom: 30px;
+}
+.message-box textarea{
+    background-color: transparent;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    resize: none;
+    width: 100%;
+    height: 130px;
+}
+.message{
+    cursor: text;
+}
+.mr{
+    margin-right: 100px;
+}
+.mf{
+    margin-bottom: 104px;
+}
+.footer img{
+    position: absolute;
+}
+.light1{
+    left: -200px;
+    bottom: -300px;
+}
+.light2{
+    right: -300px;
+    top: -200px;
+}
+.footer__fon{
+    bottom: 0px;
+    right: 0px;
+}

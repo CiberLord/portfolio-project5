@@ -1,0 +1,49 @@
+.about {
+    padding-top: 190px;
+    padding-bottom: 60px;
+}
+.about .col-5{
+    margin-bottom: 130px;
+}
+.about__item {
+    display: flex;
+    align-items: center;
+}
+
+.about__item-icon {
+    width: 120px;
+    height: 120px;
+    display: block;
+    border-radius: 50%;
+    background-color: #FFBBBB;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 70%;
+}
+
+.icon1 {
+    background-image: url(../img/cat-icon.svg);
+}
+.icon2 {
+    background-color: #BBFFD6;
+    background-image: url(../img/med-icon.svg);
+}
+.icon3 {
+    background-color: #C5BBFF;
+    background-image: url(../img/hurt-hand.svg);
+}
+.about__item-content{
+    margin-left: 25px;
+}
+.about__item-content h3 {
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+}
+
+.about__item-content p {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    padding-top: 10px;
+}

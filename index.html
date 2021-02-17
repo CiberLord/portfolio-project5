@@ -12,11 +12,18 @@
     <link rel="stylesheet" href="css/bootstrap-grid.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/catalog.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/our-team.css">
+    <link rel="stylesheet" href="css/footer.css">
     <title>Document</title>
 </head>
 
 <body>
     <header class="header">
+        <!-- <img src="img/fon.png" alt="" class="sun"> -->
+        <img src="img/pet.png" alt="" class="pet__image">
         <nav class="navbar">
             <div class="container-fluid row-padding">
                 <div class="row justify-content-between align-items-center">
@@ -57,8 +64,245 @@
                 </div>
             </div>
         </nav>
-    </header>
+        <div class="header__inner">
+            <div class="container-fluid row-padding">
+                <div class="row">
+                    <div class="col-xl-5">
+                        <h1 class="main__title">
+                            Твой новый друг
+                            с доставкой на дом
+                        </h1>
+                        <p class="main__text">
+                            Онлайн-магазин домашних животных
+                            подарит тебе нового друга за несколько кликов. Действуй!
+                        </p>
+                        <button class="main-button">Посмотреть друзей</button>
+                    </div>
+                </div>
 
+            </div>
+        </div>
+        <div class="container-fluid row-padding cart">
+            <div class="row">
+                <div class="col-xl-5">
+                    <div class="cart-slider">
+                        <div class="cart__item">
+                            <a href="#" class="cart-a">Собаки</a>
+                            <img src="img/image 2.png" alt="" class="cart-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="about">
+        <div class="container-fluid  row-padding">
+            <div class="row">
+                <div class="col-5">
+                    <h2 class="section-title">
+                        Почему выбирают наших друзей?
+                    </h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <div class="about__item">
+                        <i class="about__item-icon icon1"></i>
+                        <div class="about__item-content">
+                            <h3>
+                                Их много
+                            </h3>
+                            <p>
+                                Огромный выбор домашних питомцев
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="about__item">
+                        <i class="about__item-icon icon2"></i>
+                        <div class="about__item-content">
+                            <h3>
+                                Они здоровы
+                            </h3>
+                            <p>
+                                Мы заботимся о каждом питомце
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="about__item">
+                        <i class="about__item-icon icon3"></i>
+                        <div class="about__item-content">
+                            <h3>
+                                Их любят
+                            </h3>
+                            <p>
+                                Мы окружаем их заботой и любовью
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="catalog">
+        <div class="container-fluid row-padding">
+            <div class="row catalog-title">
+                <div class="col-5">
+                    <h2 class="section-title">
+
+                    </h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <ul class="catalog__filter">
+                        <li type='all' active class="filter-button active-filter">
+                            Все
+                        </li>
+                        <li type='dogs' active class="filter-button">
+                            Собаки
+                        </li>
+                        <li type='cats' active class="filter-button">
+                            Кошки
+                        </li>
+                        <li type='rats' active class="filter-button">
+                            Хомячки
+                        </li>
+                        <li type='birds' active class="filter-button">
+                            Попугаи
+                        </li>
+                        <li type='fish' active class="filter-button">
+                            Рыбки
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="catalog__content">
+                <div class="catalog__slider">
+                    <div class="catalog__item">
+                        <div class="catalog__date">
+                            <span value="date" class="c-date-number">8</span><span>месяцев</span><span value="awards"
+                                class="c-date-number">4</span><span>награды</span>
+                        </div>
+                        <img src="img/catalog-img1.png" alt="">
+                        <h3>Доберман</h3>
+                        <p>
+                            Отличный новый друг для всей семьи, охраняет и обожает
+                        </p>
+                        <div class="filters">
+                            <span class="type-round"></span>
+                            <span class="type">собаки</span>
+                            <span class="breed-round"></span>
+                            <span class="breed">породистая</span>
+                        </div>
+                        <div class="item__price">6899 p.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="gallery">
+        <div class="container-fluid row-padding">
+            <div class="row gallery__title">
+                <h2 class="section-title">
+                    С нами весело!
+                </h2>
+            </div>
+            <div class="gallery__grid">
+                <div class="gallery__item g1">
+                    <img src="img/gallery_dogball.jpg" alt="">
+                </div>
+                <div class="gallery__item g2">
+                    <img src="img/gallery_cat.jpg" alt="">
+                </div>
+                <div class="gallery__item g3">
+                    <img src="img/gallery_mouse.jpg" alt="">
+                </div>
+                <div class="gallery__item g4">
+                    <img src="img/bird.jpg" alt="">
+                </div>
+                <div class="gallery__item g5">
+                    <img src="img/gallery_dogs.jpg" alt="">
+                </div>
+                <div class="gallery__item g6">
+                    <img src="img/gallery_human.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="our__team">
+        <img class="dog-f" src="img/dog-foot.svg" alt="">
+        <img class="lapki" src="img/lapki.svg" alt="">
+        <div class="container-fluid row-padding">
+            <div class="row justify-content-around">
+                <div class="col-5">
+                    <h2 class="section-title">
+                        Давайте знакомиться
+                    </h2>
+                    <h3 class="our__team-title2">
+                        Мы - дружная команда питомника Happy Pet
+                    </h3>
+                    <p class="our__team-text">
+
+                        И все же оптимальное решение этой дилеммы есть. Заказать качественнее тексты для ветеринарного
+                        магазина, аптеки, собственного блога или тематической группы в социальных сетях можно
+
+                        Животные — это тема, на которую (согласно стереотипам) может писать даже начинающий автор. Но,
+                        несмотря на кажущуюся легкость, о «подводных камнях» тематики знает любой опытный копирайтер —
+                        собаки, кошки, а тем более экзоты вроде рептилий или даже аквариумных рыбок требуют сугубо
+                        профессионального подхода. Только в этом случае текст получится не только интересным, и не
+                        только оптимальным с точки зрения продвижения — но и корректным (а значит, полезным).
+                    </p>
+                    <button class="read__more">читать больше <i></i></button>
+                </div>
+                <div class="col-5">
+                    <div class="our__team-img">
+                        <img src="img/photo1.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <img src="img/light1.png" alt="" class="light1">
+        <img src="img/labrador.png" alt="" class="footer__fon">
+        <img src="img/light1.png" alt="" class="light2">
+        <div class="container-fluid row-padding">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="section-title">
+                        Есть вопросы? Задавайте!
+                    </h2>
+                </div>
+            </div>
+            <form class="form">
+                <div class="row justify-content-between mf">
+                    <div class="col-5 mr">
+                        <input class="input" type="text" value="Введите имя">
+                    </div>
+                    <div class="col-5">
+                        <input class="input" type="email" value="E-mail">
+                    </div>
+                </div>
+                <div class="row justify-content-between mf">
+                    <div class="col-5 mr">
+                        <input type="text" class="input" value="Введите телефон">
+                    </div>
+                    <div class="col-5">
+                        <div class="switch-theme">
+                            Тема вопроса
+                        </div>
+                    </div>
+                </div>
+                <div class="message-box mf">
+                    <textarea class="message"></textarea>
+                </div>
+            </form>
+        </div>
+    </footer>
 </body>
 
 </html>
