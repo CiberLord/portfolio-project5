@@ -40,6 +40,8 @@ img {
 .row-padding {
     padding-left: 135px;
     padding-right: 135px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 .section-title {
@@ -48,4 +50,42 @@ img {
     font-size: 40px;
     line-height: 49px;
     
+}
+
+/* media  */
+@media(max-width: 1400px){
+    .row-padding {
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+}
+@media(max-width: 1200px){
+    .row-padding {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+}
+@media(max-width: 1000px){
+    .row-padding {
+        padding-left: 55px;
+        padding-right: 55px;
+    }
+}
+@media(max-width: 800px){
+    .row-padding {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+@media(max-width: 600px){
+    .row-padding {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+@media(max-width: 450px){
+    .row-padding {
+        padding-left: 4px;
+        padding-right: 4px;
+    }
 }
