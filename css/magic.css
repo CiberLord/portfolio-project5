@@ -1,15 +1,18 @@
+.magic-d{
+
+}
 .magic-slider-container{
     position: static !important;
     display: block !important;
     position: relative !important;
+    background-color: transparent;
 }
 .magic-viewport{
-    position: relative;
+    position: absolute;
     margin: 0px;
     padding: 0px;
-    width: 100%;
-    height: 100%;
     overflow: hidden;
+    background-color: transparent;
 }
 
 .magic-slide{
