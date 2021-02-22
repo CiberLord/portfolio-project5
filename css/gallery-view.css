@@ -34,3 +34,9 @@
     right: 0px; */
 
 }
+@media(max-width: 430px){
+    .g-item{
+        width: 100%;
+        height: 100vh;
+    }
+}

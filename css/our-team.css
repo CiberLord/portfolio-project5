@@ -22,6 +22,7 @@
     margin-top: 61px;
     color: #FF1A27;
     font-weight: bold;
+    margin-bottom: 30px;
 }
 .read__more>i{
     display: inline-block;
@@ -41,4 +42,23 @@
     position: absolute;
     bottom: 0px;
     left: 30px;
+}
+.our__team-img{
+    max-width: 500px;
+    overflow: hidden;
+}
+.our__team-img>img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media(max-width: 768px){
+    .dog-f{
+        width: 70px;
+    }
+    .lapki{
+        width: 70px;
+    }
 }

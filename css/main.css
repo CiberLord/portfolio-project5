@@ -49,43 +49,32 @@ img {
     font-weight: 900;
     font-size: 40px;
     line-height: 49px;
-    
+    margin-bottom: 60px;
 }
 
 /* media  */
-@media(max-width: 1400px){
+
+@media(max-width: 1400px) {
     .row-padding {
         padding-left: 80px;
         padding-right: 80px;
     }
 }
-@media(max-width: 1200px){
-    .row-padding {
-        padding-left: 60px;
-        padding-right: 60px;
+
+@media(max-width: 1200px) {
+    .section-title {
+        font-size: 32px;
     }
 }
-@media(max-width: 1000px){
-    .row-padding {
-        padding-left: 55px;
-        padding-right: 55px;
+
+@media(max-width: 768px) {
+    .section-title {
+        font-size: 28px;
     }
 }
-@media(max-width: 800px){
-    .row-padding {
-        padding-left: 30px;
-        padding-right: 30px;
-    }
-}
-@media(max-width: 600px){
-    .row-padding {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-}
-@media(max-width: 450px){
-    .row-padding {
-        padding-left: 4px;
-        padding-right: 4px;
+
+@media(max-width: 450px) {
+    .section-title {
+        font-size: 22px;
     }
 }

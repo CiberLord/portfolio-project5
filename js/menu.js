@@ -1,56 +1,49 @@
 (() => {
-    const media = window.matchMedia('(max-width: 520px)');
+    const media = window.matchMedia('(max-width: 900px)');
+    const media450=window.matchMedia('(max-width: 450px)');
 
-    let flag = false;
-    let items = [];
-    let menuList = $('.menu-list').css({
-        'width': '250px'
-    });
-    let menuButton = $('.menu-button');
-    init();
-    menuButton.on('click', function (event) {
-        let time = 0;
-        if (flag) {
-            for (let i = 0; i < items.length; i++) {
-                setTimeout(() => {
-                    items[i].animate({
-                        left: '100%'
-                    }, { queue: false })
-                }, time)
-                time += 50;
-            }
-        } else {
-            for (let i = 0; i < items.length; i++) {
-                setTimeout(() => {
-                    items[i].animate({
-                        left: '0px'
-                    }, { queue: false })
-                }, time)
-                time += 50;
-            }
-        }
-        flag = !flag;
-    });
+    let isOpen=false;
+    let menuList=$('<div class="menu-list"></div>');
+    let menu=$('.menu').append(menuList);
+    let menuButton=$('.menu-button');
 
-    if (media.matches) {
-        $('.contact-item').detach().addClass('menu-item').css({ 'left': '100%', 'margin-right': '0px' }).appendTo(menuList);
-        init();
+
+
+    if(media.matches){
+        menuInit();
     }
-    media.addListener(function (e) {
-        if (e.matches) {
-            $('.contact-item').detach().addClass('menu-item').css({ 'left': '100%', 'margin-right': '0px' }).appendTo(menuList);
-            init();
+    media.addListener(function(e){
+        if(e.matches){
+            menuInit();
+        }
+    })
+    if(media450.matches){
+        menuList.append($('.contact-item'));
+    }
+    media450.addListener(function(e){
+        if(e.matches){
+            menuList.append($('.contact-item'));            
         }
     })
 
-
-
-    function init() {
-        menuList.find('.menu-item').each(function (index, el) {
-            $(el).css({
-                'left': '100%'
-            })
-            items.push($(el));
+    function menuInit(){
+        menuList.append($('.menu-item'));
+        menuButton.on('click',function(){
+            console.log("heello")
+            if(!isOpen){
+                menuList.css('display','block').animate({
+                    opacity: 1,
+                    top: '100%'
+                })
+            }else{
+                menuList.animate({
+                    opacity: 0,
+                    top: '300%'
+                },function(){
+                    menuList.css('display','none')
+                })
+            }
+            isOpen=!isOpen;
         })
     }
     

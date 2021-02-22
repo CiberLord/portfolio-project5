@@ -5,15 +5,6 @@ catalog.empty();
 request('all',onloadCatalog);
 
 
-
-
-//галлерея из 6ти изображений
-gw.create('.gallery__grid', {
-    exitButton: $('<div class="gallery-exit"><span class="fs"></span><span class="ss"></span></div>')
-});
-
-
-
 //работа фильтр кнопок
 $('.catalog__filter').find('li').on('click', function (event) {
     if (!$(this).hasClass('active-filter')) {
@@ -258,11 +249,6 @@ function onloadCatalog(list) {
     if (list != null) {
         for (let e of list)
             catalog.append(newCatalogItem(e));
-        catalog.slick({
-            infinite: false,
-            slidesToShow: 1,
-            slidesToScroll: 1
-        });
     }
     else {
         catalog.append($('<div>пусто:(</div>'));

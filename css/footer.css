@@ -1,25 +1,95 @@
-.footer{
+.footer {
     background-color: #000;
     padding: 90px 0;
     color: #fff;
     position: relative;
     overflow: hidden;
 }
-.form{
+
+.form {
     max-width: 900px;
 }
-.input{
+
+.input {
     width: 100%;
     background-color: transparent;
     border-bottom: 1px solid #fff;
     color: #fff;
     padding-bottom: 30px;
 }
-.switch-theme{
+
+.switch-theme {
     border-bottom: 1px solid #fff;
     padding-bottom: 30px;
+    position: relative;
+    cursor: pointer;
 }
-.message-box textarea{
+
+.themes-list {
+    position: absolute;
+    top: 400%;
+    background-color: #fff;
+    left: 0px;
+    color: #000;
+    border-radius: 7px;
+    overflow: hidden;
+    display: none;
+    opacity: 0;
+}
+
+.theme-item {
+    padding: 13px 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-item>span {
+    position: relative;
+    z-index: 100;
+}
+
+.theme-item::before {
+    display: block;
+    content: '';
+    width: 0px;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+    background-color: rgb(41, 115, 163);
+}
+
+.theme-item:hover {
+    color: #fff;
+}
+
+.theme-item:hover::before {
+    width: 100%;
+    transition: width .3s;
+}
+
+.switch-theme>span {
+    position: relative;
+    display: inline-block;
+}
+
+.switch-theme>span::after {
+    display: block;
+    content: '';
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 10%;
+    right: -10px;
+    background-image: url(../img/switch.svg);
+    background-repeat: no-repeat;
+    background-position: center 0;
+    background-size: 8px;
+}
+
+.message-box textarea {
     background-color: transparent;
     border-bottom: 1px solid #fff;
     color: #fff;
@@ -29,25 +99,44 @@
     position: relative;
     z-index: 10000;
 }
-.mr{
+
+.mr {
     margin-right: 100px;
 }
-.mf{
+
+.mf {
     margin-bottom: 104px;
 }
-.footer img{
+
+.footer img {
     position: absolute;
     z-index: 0;
 }
-.light1{
+
+.light1 {
     left: -200px;
     bottom: -300px;
 }
-.light2{
+
+.light2 {
     right: -300px;
     top: -200px;
 }
-.footer__fon{
+
+.footer__fon {
     bottom: 0px;
     right: 0px;
+}
+
+@media( max-width: 768px) {
+    .input {
+        margin-bottom: 60px;
+        width: 100%;
+    }
+    .mr {
+        margin-right: 0px;
+    }
+    .mf {
+        margin-bottom: 0px;
+    }
 }
