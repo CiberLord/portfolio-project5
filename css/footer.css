@@ -26,6 +26,7 @@
 }
 
 .themes-list {
+    z-index: 20000;
     position: absolute;
     top: 400%;
     background-color: #fff;

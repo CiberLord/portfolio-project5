@@ -3,7 +3,7 @@
     padding-bottom: 60px;
 }
 .about .col-ml-12{
-    margin-bottom: 130px;
+    margin-bottom: 90px;
 }
 .about__item {
     display: flex;
@@ -60,6 +60,9 @@
         font-size: 15px;
         line-height: 18px;
         padding-top: 10px;
+    }
+    .about__item-icon{
+        margin-bottom: 40px;
     }
 }
 @media(max-width:768px){

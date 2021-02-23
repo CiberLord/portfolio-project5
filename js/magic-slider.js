@@ -1,8 +1,9 @@
 (function () {
 
     let m = {};
+    let sliders = new Map();
 
-    let Slider = function (selector, props) {
+    let Slider = function (selector) {
         this.currentIndex = 0;//индекс текущего элменета
         this.deltaX = 0;//ширина самого длинного слайла с учетом горизонтального отступа
         this.slides = [];//массив слайдов
@@ -14,7 +15,7 @@
         this.viewportHeight = 0;
         this.slider = $(selector);
         this.breakpoints = [];//список медиа запросов
-        this.maxSlidingNum=0;//максимальное число перелистований
+        this.maxSlidingNum = 0;//максимальное число перелистований
         // параметрические свойства
         this.prev = $('<button class="magic-button magic-prev-button">prev</button>');//кнпока назад
         this.next = $('<button class="magic-button magic-next-button">next</button>')//кнопка вперед
@@ -28,11 +29,11 @@
         this.dotItemClass = "magic-dots-item"; //стиль точки
         this.activedotItemClass = "magic-dot-activ"; //стиль активной точки
         this.onScroll = null; //функция срабатывающая при скролле слайдов
-        
+
 
     }
     Slider.prototype.setProps = function (props) {
-        
+
         for (let key of Object.keys(props)) {
             switch (key) {
                 case 'prevButton': {
@@ -68,7 +69,7 @@
                     break;
                 }
                 case 'breakpoints': {
-                    this.breakpoints=props[key];
+                    this.breakpoints = props[key];
                     break;
                 }
             }
@@ -76,17 +77,20 @@
     }
     Slider.prototype.destroy = function () {
         //удаление слайдера но при этом сохраняется просто верстка
-        this.slider.append($('.magic-slide'));
-        $('.magic-d').remove();
+        this.slider.append(this.slider.find('.magic-slide'));
+        this.slider.find('.magic-d').remove();
         this.slider.children().removeClass('magic-slide').attr('style', '');
         this.slider.removeClass('magic-slider-container').attr('style', '');
         this.slides = [];
+        this.currentIndex = 0;
+        return this;
     }
 
 
     // создание слайдера
     m.create = function (selector, props) {
-        let s = new Slider(selector, props);//обьект слайдера
+        let s = sliders.get(selector);
+        s = (s == undefined) ? new Slider(selector, props) : s.destroy();//обьект слайдера
         s.setProps(props);
         //инициализация слайдера
         init(s);
@@ -97,14 +101,32 @@
         for (let q of s.breakpoints) {
             checkPoint(s, q.media, q.props);
         }
+        sliders.set(selector, s); //save slider in the map
+        console.log("sliders-size"+sliders.size);
+    }
+    m.destroy = function (selector, media) {
+       let slider=sliders.get(selector);
+       if(slider){
+           if(media){
+               let m=matchMedia(media);
+               if(m.matches){
+                   slider.destroy();
+               }
+               m.addListener(function(e){
+                   if(e.matches){
+                       slider.destroy();
+                   }
+               })
+           }
+       }
     }
 
     function init(s) {
         let maxwidth = 0, maxheight = 0; //велечины с максимальной шириной и высотой слайда
         let querySlides = s.slider.addClass('magic-slider-container').children().addClass('magic-slide').wrapAll('<div class="magic-d magic-viewport"></div>').each(function (index, el) {
             //тут идет поиск самого большого слайда без учета маргинов
-            let mw = parseFloat($(el).css('width'));
-            let mh = parseFloat($(el).css('height'));
+            let mw = parseFloat($(el).outerWidth());
+            let mh = parseFloat($(el).outerHeight());
             if (mw > maxwidth)
                 maxwidth = mw;
             if (mh > maxheight)
@@ -117,7 +139,7 @@
         if (s.slideToScroll > s.slideToShow) {
             s.slideToScroll = s.slideToShow;
         }
-        s.viewport = $('.magic-viewport');  //viewport
+        s.viewport = s.slider.find('.magic-viewport');  //viewport
         s.mh = parseFloat(querySlides.css('margin-right'));//горизонтальные отступы в margin слайдов
         s.mv = parseFloat(querySlides.css('margin-top'));//вертикальные отступы в margin слайдов
         s.sliderPadding = parseFloat(s.slider.css('padding-left'));//внутренний оступ слайдера
@@ -147,9 +169,8 @@
             x += s.deltaX;
         }
         //подсчет максимального количества слайдингов
-        let tmp=s.slides.length-s.slideToShow;
-        s.maxSlidingNum=((tmp-tmp%s.slideToScroll)/s.slideToScroll)+((tmp%s.slideToScroll===0)?0:1);
-        console.log(s.maxSlidingNum);
+        let tmp = s.slides.length - s.slideToShow;
+        s.maxSlidingNum = ((tmp - tmp % s.slideToScroll) / s.slideToScroll) + ((tmp % s.slideToScroll === 0) ? 0 : 1);
         //добавление кнопок
         if (s.buttons) {
             s.slider.append(s.prev.addClass('magic-d')).append(s.next.addClass('magic-d'));
@@ -200,7 +221,7 @@
                         left: parseFloat(s.slides[i].css('left')) + countScroll * s.deltaX
                     }, 300);
                 }
-                if (s.onScroll != null) s.onScroll(s.currentIndex,s);
+                if (s.onScroll != null) s.onScroll(s.currentIndex, s);
             }
         })
         s.next.on('click', function () {
@@ -220,7 +241,7 @@
                         left: parseFloat(s.slides[i].css('left')) - countScroll * s.deltaX
                     }, 300);
                 }
-                if (s.onScroll != null) s.onScroll(s.currentIndex,s);
+                if (s.onScroll != null) s.onScroll(s.currentIndex, s);
             }
         })
     }
@@ -229,7 +250,7 @@
         function mediaHandle(e) {
             if (e.matches) {
                 s.destroy();
-                if(prop!=undefined) s.setProps(prop);
+                if (prop != undefined) s.setProps(prop);
                 init(s);
                 console.log('initing');
                 setHandles(s);

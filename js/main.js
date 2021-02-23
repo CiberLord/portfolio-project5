@@ -4,7 +4,6 @@ let catalog = $('.catalog__slider');
 catalog.empty();
 request('all',onloadCatalog);
 
-
 //работа фильтр кнопок
 $('.catalog__filter').find('li').on('click', function (event) {
     if (!$(this).hasClass('active-filter')) {
@@ -16,6 +15,8 @@ $('.catalog__filter').find('li').on('click', function (event) {
         //получения ответа с сервера и выполнить колбэк который должен обновить список слайдов
     }
 })
+
+Magic.destroy('.catalog__slider','(max-width: 370px)');
 
 //функция связанная с сервером(иммитация)
 function request(filter, onload) {
@@ -249,6 +250,37 @@ function onloadCatalog(list) {
     if (list != null) {
         for (let e of list)
             catalog.append(newCatalogItem(e));
+        
+        console.log($('.catalog__item').outerHeight());
+        Magic.create('.catalog__slider',{
+            slideToShow: 3,
+            slideToScroll: 1,
+            nextButton: $('<button class="slide-btn next"></button>'),
+            prevButton: $('<button class="slide-btn prev"></button>'),
+            breakpoints:[
+                {
+                    media: '(max-width: 1299px)'
+                },
+                {
+                    media: '(max-width: 1099px)'
+                },
+                {
+                    media: '(max-width: 993px)',
+                    props:{
+                        slideToShow: 2
+                    }
+                },
+                {
+                    media: '(max-width: 659px)',
+                    props:{
+                        slideToShow: 1
+                    }
+                },
+                {
+                    media: '(max-width: 519px)'
+                }
+            ]
+        })
     }
     else {
         catalog.append($('<div>пусто:(</div>'));
