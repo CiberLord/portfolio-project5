@@ -13,6 +13,16 @@
     padding: 0px;
     overflow: hidden;
     background-color: transparent;
+    touch-action: none;
+}
+.magic-tracker{
+    position: absolute;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    left: 0px;
+    top: 0px;
 }
 
 .magic-slide{

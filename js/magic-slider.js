@@ -8,6 +8,7 @@
         this.deltaX = 0;//ширина самого длинного слайла с учетом горизонтального отступа
         this.slides = [];//массив слайдов
         this.viewport = null;
+        this.tracker = null;
         this.mh = 0;
         this.mv = 0;
         this.sliderPadding = 0;
@@ -20,6 +21,7 @@
         this.prev = $('<button class="magic-button magic-prev-button">prev</button>');//кнпока назад
         this.next = $('<button class="magic-button magic-next-button">next</button>')//кнопка вперед
         this.infinite = false; //бесконечное прокручивание
+        this.speed=300;
         this.slideToShow = 1;//количество которые нужно показать в окне
         this.slideToScroll = 1;//на сколько слайдов скролить
         this.buttons = true; //показывать или не показывать кнопки
@@ -59,6 +61,9 @@
                 case 'dots': {
                     this.dots = props[key];
                     break;
+                }
+                case 'speed':{
+                    this.speed=props[key];
                 }
                 case 'dotBox': {
                     this.dotbox = props[key];
@@ -102,28 +107,27 @@
             checkPoint(s, q.media, q.props);
         }
         sliders.set(selector, s); //save slider in the map
-        console.log("sliders-size"+sliders.size);
     }
     m.destroy = function (selector, media) {
-       let slider=sliders.get(selector);
-       if(slider){
-           if(media){
-               let m=matchMedia(media);
-               if(m.matches){
-                   slider.destroy();
-               }
-               m.addListener(function(e){
-                   if(e.matches){
-                       slider.destroy();
-                   }
-               })
-           }
-       }
+        let slider = sliders.get(selector);
+        if (slider) {
+            if (media) {
+                let m = matchMedia(media);
+                if (m.matches) {
+                    slider.destroy();
+                }
+                m.addListener(function (e) {
+                    if (e.matches) {
+                        slider.destroy();
+                    }
+                })
+            }
+        }
     }
 
     function init(s) {
         let maxwidth = 0, maxheight = 0; //велечины с максимальной шириной и высотой слайда
-        let querySlides = s.slider.addClass('magic-slider-container').children().addClass('magic-slide').wrapAll('<div class="magic-d magic-viewport"></div>').each(function (index, el) {
+        let querySlides = s.slider.addClass('magic-slider-container').children().addClass('magic-slide').wrapAll('<div class="magic-d magic-viewport"></div>').wrapAll('<div class="magic-d magic-tracker"></div>').each(function (index, el) {
             //тут идет поиск самого большого слайда без учета маргинов
             let mw = parseFloat($(el).outerWidth());
             let mh = parseFloat($(el).outerHeight());
@@ -140,6 +144,7 @@
             s.slideToScroll = s.slideToShow;
         }
         s.viewport = s.slider.find('.magic-viewport');  //viewport
+        s.tracker = s.slider.find('.magic-tracker');
         s.mh = parseFloat(querySlides.css('margin-right'));//горизонтальные отступы в margin слайдов
         s.mv = parseFloat(querySlides.css('margin-top'));//вертикальные отступы в margin слайдов
         s.sliderPadding = parseFloat(s.slider.css('padding-left'));//внутренний оступ слайдера
@@ -155,6 +160,9 @@
             'left': s.sliderPadding + 'px',
             'top': s.sliderPadding + 'px',
             'width': s.viewportWidth + 'px',
+            'height': s.viewportHeight + 'px'
+        })
+        s.tracker.css({
             'height': s.viewportHeight + 'px'
         })
         querySlides.css('margin', '0px');
@@ -204,46 +212,84 @@
     }
     function setHandles(s) {
         this.currentIndex = 0;
-        s.prev.on('click', function () {
-            if (!s.infinite) {
+        let x = 0;
+        let lastX = 0;
+        let isTouch = false;
+        let points = [];
+        let currentTime=0;
 
-                let countScroll = 1;
-                let index = s.currentIndex - s.slideToScroll;
-                if (index > 0) {
-                    countScroll = s.slideToScroll
-                    s.currentIndex = index;
-                } else {
-                    countScroll = s.slideToScroll + index;
-                    s.currentIndex = 0;
-                }
-                for (let i = 0; i < s.slides.length; i++) {
-                    s.slides[i].animate({
-                        left: parseFloat(s.slides[i].css('left')) + countScroll * s.deltaX
-                    }, 300);
-                }
-                if (s.onScroll != null) s.onScroll(s.currentIndex, s);
+        let counter = 0;
+        let tmp = s.slides.length - s.slideToShow;
+        let posx = 0;
+        points.push(posx);
+        for (let i = 1; i <= s.maxSlidingNum; i++) {
+            let k = 1;
+            counter += s.slideToScroll;
+            if (counter <= tmp) {
+                k = s.slideToScroll;
+            } else {
+                k = counter - tmp;
             }
+            posx -= k * s.deltaX;
+            points.push(posx);
+        }
+
+        s.viewport.on('pointerdown', function (e) {
+            x = lastX = e.clientX;
+            isTouch = true;
+        })
+        s.viewport.on('pointermove', function (e) {
+            if (isTouch) {
+                let dx=e.clientX-lastX;
+                s.tracker.css({
+                    'left':parseFloat(s.tracker.css('left'))+dx+'px'
+                })
+                lastX=e.clientX;
+                if(currentTime===0) currentTime=performance.now();
+            }
+        })
+        s.viewport.on('pointerup', function (e) {
+            isTouch = false;
+            let dx = e.clientX - x;
+            let time=performance.now()-currentTime;
+            currentTime=0;
+            if (dx >= 50) prev(time);
+            else if(dx<=-50) next(time);
+            else {
+                s.tracker.animate({
+                    left: points[s.currentIndex]
+                })
+            }
+        })
+
+
+
+
+        s.prev.on('click', function () {
+            prev(s.speed);
         })
         s.next.on('click', function () {
-            if (!s.infinite) {
-                let countScroll = 1;
-                let index = s.currentIndex + s.slideToScroll;
-                if (index + s.slideToShow < s.slides.length) {
-                    countScroll = s.slideToScroll
-                    s.currentIndex = index;
-                } else {
-                    let d = s.currentIndex + s.slideToShow;
-                    countScroll = (s.slides.length - d > 0) ? s.slides.length - d : 0;
-                    s.currentIndex = s.slides.length - s.slideToShow;
-                }
-                for (let i = 0; i < s.slides.length; i++) {
-                    s.slides[i].animate({
-                        left: parseFloat(s.slides[i].css('left')) - countScroll * s.deltaX
-                    }, 300);
-                }
+            next(s.speed);
+        })
+        function prev(time) {
+            if (s.currentIndex > 0) {
+                s.currentIndex--;
                 if (s.onScroll != null) s.onScroll(s.currentIndex, s);
             }
-        })
+            move(time);
+        }
+        function next(time) {
+            if (s.currentIndex + 1 < points.length) {
+                s.currentIndex++;
+                if (s.onScroll != null) s.onScroll(s.currentIndex, s);
+            }
+            move(time);
+        }
+        function move(time){
+            s.tracker.animate({
+                left: points[s.currentIndex]
+            },time)
+        }
     }
     function checkPoint(s, m, prop) {
         let media = matchMedia(m);
@@ -252,7 +298,6 @@
                 s.destroy();
                 if (prop != undefined) s.setProps(prop);
                 init(s);
-                console.log('initing');
                 setHandles(s);
             }
         }

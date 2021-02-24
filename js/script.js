@@ -46,12 +46,6 @@
             }
         ] 
     })
-    $('.slide-btn').bind('click',function(){
-        console.log('hhh');
-    })
-
-
-
 
     //галлерея из 6ти изображений
     gw.create('.gallery__grid', {

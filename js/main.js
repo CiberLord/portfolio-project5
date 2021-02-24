@@ -250,8 +250,6 @@ function onloadCatalog(list) {
     if (list != null) {
         for (let e of list)
             catalog.append(newCatalogItem(e));
-        
-        console.log($('.catalog__item').outerHeight());
         Magic.create('.catalog__slider',{
             slideToShow: 3,
             slideToScroll: 1,
