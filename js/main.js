@@ -5,9 +5,15 @@ catalog.empty();
 request('all',onloadCatalog);
 
 //работа фильтр кнопок
-$('.catalog__filter').find('li').on('click', function (event) {
+$('.catalog__filter').on("selectstart",function(e){
+    return false;
+})
+$('.catalog__filter').find('button').on("selectstart",function(e){
+    return false;
+}).on('click', function (event) {
+    event.preventDefault();
     if (!$(this).hasClass('active-filter')) {
-        $('.catalog__filter').find('li').removeClass("active-filter");
+        $('.catalog__filter').find('button').removeClass("active-filter");
         $(this).addClass('active-filter');
         catalog.empty();
         request($(this).attr('filter'),onloadCatalog);
@@ -255,6 +261,7 @@ function onloadCatalog(list) {
             slideToScroll: 1,
             nextButton: $('<button class="slide-btn next"></button>'),
             prevButton: $('<button class="slide-btn prev"></button>'),
+            dots: true,
             breakpoints:[
                 {
                     media: '(max-width: 1299px)'

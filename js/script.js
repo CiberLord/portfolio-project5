@@ -7,19 +7,10 @@
         slideToShow: 2,
         nextButton: $('<button class="slide-btn next"></button>'),
         prevButton: $('<button class="slide-btn prev"></button>'),
-        dotBox: $('<div class="scroll-track"><div class="scroll-item"></div></div>'),
-            onScroll: function (index,slider) {
-                if(lastIndex!=index){
-                    let item=$('.scroll-item');
-                    let size=parseFloat(item.css('width'));
-                    let x=parseFloat($('.scroll-track').css('width'))/slider.maxSlidingNum;
-
-                    item.css({
-                        'left':parseFloat(item.css('left'))+((lastIndex<index)?+x-size:-x+size)+'px'
-                    })
-                    lastIndex=index;
-                }
-            },
+        scroll_bar: true,
+        isTouch: false,
+        scrollTrackclass: "scroll-track",
+        trackItemclass:"scroll-item",
         breakpoints:[
             {
                 media: '(max-width: 767px)'

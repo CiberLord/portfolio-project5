@@ -14,25 +14,28 @@
         this.sliderPadding = 0;
         this.viewportWidth = 0;
         this.viewportHeight = 0;
-        this.slider = $(selector);
+        this.slider = $(selector).on("selectstart", function () {
+            return false;
+        });
         this.breakpoints = [];//список медиа запросов
         this.maxSlidingNum = 0;//максимальное число перелистований
         // параметрические свойства
         this.prev = $('<button class="magic-button magic-prev-button">prev</button>');//кнпока назад
         this.next = $('<button class="magic-button magic-next-button">next</button>')//кнопка вперед
         this.infinite = false; //бесконечное прокручивание
-        this.speed=300;
+        this.speed = 300;
         this.slideToShow = 1;//количество которые нужно показать в окне
         this.slideToScroll = 1;//на сколько слайдов скролить
         this.buttons = true; //показывать или не показывать кнопки
-        this.dots = false; //показывать или не покзывать точки
+        this.dots = true; //показывать или не покзывать точки
+        this.scroll_bar = false;
         this.dotbox = null; //контэйнер в котором хранятся скролл штуки
         this.dotList = []; //список точек
-        this.dotItemClass = "magic-dots-item"; //стиль точки
-        this.activedotItemClass = "magic-dot-activ"; //стиль активной точки
-        this.onScroll = null; //функция срабатывающая при скролле слайдов
-
-
+        this.dotsClass = "magic-dot"; //стиль точки
+        this.activedotsClass = "magic-dot-activ"; //стиль активной точки
+        this.scrollTrackclass = "";//стильдля скролл трэк
+        this.scrollItemClass = "";//стиль для скроллбара
+        this.isTouch = true;//разрешить слайдинг движением пальцев
     }
     Slider.prototype.setProps = function (props) {
 
@@ -60,22 +63,30 @@
                 }
                 case 'dots': {
                     this.dots = props[key];
+                    this.scroll_bar = false;
                     break;
                 }
-                case 'speed':{
-                    this.speed=props[key];
+                case 'scroll_bar': {
+                    this.scroll_bar = props[key];
+                    this.dots = false;
                 }
-                case 'dotBox': {
-                    this.dotbox = props[key];
-                    break;
-                }
-                case 'onScroll': {
-                    this.onScroll = props[key];
-                    break;
+                case 'speed': {
+                    this.speed = props[key];
                 }
                 case 'breakpoints': {
                     this.breakpoints = props[key];
                     break;
+                }
+                case "trackItemclass": {
+                    this.scrollItemClass = props[key];
+                    break;
+                }
+                case "scrollTrackclass": {
+                    this.scrollTrackclass = props[key];
+                    break;
+                }
+                case "isTouch": {
+                    this.isTouch = props[key];
                 }
             }
         }
@@ -125,6 +136,7 @@
         }
     }
 
+    // инициализация слайдов, слайдера, растановка размеров и отсупов
     function init(s) {
         let maxwidth = 0, maxheight = 0; //велечины с максимальной шириной и высотой слайда
         let querySlides = s.slider.addClass('magic-slider-container').children().addClass('magic-slide').wrapAll('<div class="magic-d magic-viewport"></div>').wrapAll('<div class="magic-d magic-tracker"></div>').each(function (index, el) {
@@ -167,6 +179,7 @@
         })
         querySlides.css('margin', '0px');
         s.deltaX = maxwidth + s.mh;
+
         //позицинирование слайдов
         let x = s.mh / 2;
         for (let i = 0; i < s.slides.length; i++) {
@@ -183,40 +196,18 @@
         if (s.buttons) {
             s.slider.append(s.prev.addClass('magic-d')).append(s.next.addClass('magic-d'));
         }
-        //добавление доттеров
-        if (s.dotbox != null) {
-            s.slider.after(s.dotbox.addClass('magic-d'));
-        }
-        if (s.dots) {
-            let dotcontainer = $('<div class="magic-d magic-dots-box"></div>').css({
-                'width': s.slider.css('width')
-            });
-            s.dotbox = $('<div class="magic-dots-list"></div>');
-            for (let i = 0; i < s.slides.length; i++) {
-                let dotitem = $('<div class="magic-d ' + s.dotItemClass + '"></div>');
-                s.dotList.push(dotitem);
-                s.dotbox.append(dotitem);
-            }
-            dotcontainer.append(s.dotbox);
-            s.slider.after(dotcontainer);
-            s.dotList[0].addClass(s.activedotItemClass);
-            if (s.onScroll == null) {
-                s.onScroll = function (index) {
-                    for (let i = 0; i < s.dotList.length; i++) {
-                        s.dotList[i].removeClass(s.activedotItemClass);
-                    }
-                    s.dotList[index].addClass(s.activedotItemClass);
-                }
-            }
-        }
+
+
     }
+
+    // установка всех обработчиков
     function setHandles(s) {
         this.currentIndex = 0;
         let x = 0;
         let lastX = 0;
         let isTouch = false;
         let points = [];
-        let currentTime=0;
+        let currentTime = 0;
 
         let counter = 0;
         let tmp = s.slides.length - s.slideToShow;
@@ -234,63 +225,160 @@
             points.push(posx);
         }
 
-        s.viewport.on('pointerdown', function (e) {
-            x = lastX = e.clientX;
-            isTouch = true;
-        })
-        s.viewport.on('pointermove', function (e) {
-            if (isTouch) {
-                let dx=e.clientX-lastX;
-                s.tracker.css({
-                    'left':parseFloat(s.tracker.css('left'))+dx+'px'
-                })
-                lastX=e.clientX;
-                if(currentTime===0) currentTime=performance.now();
+        // установка доттеров
+        if (s.dots) {
+            let dotList = [];
+            let dotbox = $('<div class="magic-d magic-dots-list"></div>').on("selectstart", function () {
+                return false;
+            });
+            s.slider.append(dotbox.css({
+                'width': '80%',
+                'left': '10%'
+            }));
+
+            for (let i = 0; i < s.maxSlidingNum + 1; i++) {
+                let d = $('<div class="' + s.dotsClass + '"></div>').on("selectstart", function () {
+                    return false;
+                });
+                dotList.push(d);
+                dotbox.append(d);
             }
-        })
-        s.viewport.on('pointerup', function (e) {
-            isTouch = false;
-            let dx = e.clientX - x;
-            let time=performance.now()-currentTime;
-            currentTime=0;
-            if (dx >= 50) prev(time);
-            else if(dx<=-50) next(time);
-            else {
-                s.tracker.animate({
-                    left: points[s.currentIndex]
+            let dotMargin = 10;
+            let dotWidht = parseFloat(dotList[0].css('width')) + dotMargin;
+            x = dotMargin;
+            let listWidth = dotWidht * s.maxSlidingNum + dotWidht + dotMargin;
+            // разметка списка для точек
+            if (listWidth < parseFloat(dotbox.css('width'))) {
+                dotbox.css({
+                    'width': listWidth + 'px',
+                    'left': (parseFloat(s.slider.css('width')) - listWidth) / 2 + 'px'
                 })
+                for (let i = 0; i < dotList.length; i++) {
+                    dotList[i].css({
+                        'left': x + 'px'
+                    }).click(function (event) {
+                        slideTo(i, 200);
+                        dotList.forEach(item => {
+                            item.removeClass(s.activedotsClass);
+                        });
+                        $(this).addClass(s.activedotsClass);
+                    })
+                    x += dotWidht;
+                }
+                s.onScroll = function () {
+                    dotList.forEach(item => {
+                        item.removeClass('magic-dot-active');
+                    });
+                    dotList[s.currentIndex].addClass('magic-dot-active');
+                }
+            } else {
+                dotbox.remove();
+                s.dots = false;
+                s.scroll_bar = true;
+
             }
-        })
+
+        }
+        // установка скролл бара
+        if (s.scroll_bar) {
+            let sPoints = [0];
+            let scroller = $('<div class="magic-d magic-scroll-track ' + s.scrollTrackclass + '"></div>');
+            let item = $('<div class="magic-scroll-item ' + s.scrollItemClass + '"></div>').on("selectstart", function () {
+                return false;
+            });
+            s.slider.append(scroller);
+            scroller.append(item);
 
 
+            //создать массив точек нахождения скроллбара
+            let trackWidth = parseFloat(scroller.css('width'));
+            let deltax = (trackWidth-parseFloat(item.css('width')) )/ s.maxSlidingNum;
+            let x = 0;
+            scroller.css(
+                "left",(parseFloat(s.slider.css("width"))-trackWidth)/2+"px"
+            )
+            for (let i = 1; i <= s.maxSlidingNum; i++) {
+                x += deltax;
+                sPoints.push(x + 'px');
+            }
+            s.onScroll = function () {
+                console.log('scroll');
+                item.animate({
+                    left: sPoints[s.currentIndex]
+                }, 200)
+            }
+        }
 
-
+        if (s.isTouch) {
+            s.viewport.on('pointerdown', function (e) {
+                e.preventDefault();
+                x = lastX = e.clientX;
+                isTouch = true;
+            })
+            s.viewport.on('pointermove', function (e) {
+                e.preventDefault();
+                if (isTouch) {
+                    let dx = e.clientX - lastX;
+                    s.tracker.css({
+                        'left': parseFloat(s.tracker.css('left')) + dx + 'px'
+                    })
+                    lastX = e.clientX;
+                    if (currentTime === 0) currentTime = performance.now();
+                }
+            })
+            s.viewport.on('pointerup', function (e) {
+                isTouch = false;
+                let dx = e.clientX - x;
+                let time = performance.now() - currentTime;
+                currentTime = 0;
+                time = (time > 300) ? 300 : time;
+                if (dx >= 50) prev(time);
+                else if (dx <= -50) next(time);
+                else {
+                    s.tracker.animate({
+                        left: points[s.currentIndex]
+                    })
+                }
+            })
+        }
         s.prev.on('click', function () {
             prev(s.speed);
+        }).on("selectstart", function () {
+            return false;
         })
         s.next.on('click', function () {
             next(s.speed);
+        }).on("selectstart", function () {
+            return false;
         })
         function prev(time) {
             if (s.currentIndex > 0) {
                 s.currentIndex--;
-                if (s.onScroll != null) s.onScroll(s.currentIndex, s);
             }
             move(time);
         }
         function next(time) {
             if (s.currentIndex + 1 < points.length) {
                 s.currentIndex++;
-                if (s.onScroll != null) s.onScroll(s.currentIndex, s);
             }
             move(time);
         }
-        function move(time){
+        // движение слайдов
+        function move(time) {
+            if (s.onScroll != null) s.onScroll();
             s.tracker.animate({
                 left: points[s.currentIndex]
-            },time)
+            }, time)
+        }
+        // перелистать до нужного слайда
+        function slideTo(index, time) {
+            if (index === points.length) index--;
+            s.currentIndex = index;
+            move(time);
         }
     }
+
+    // работа с медиа запросами
     function checkPoint(s, m, prop) {
         let media = matchMedia(m);
         function mediaHandle(e) {

@@ -44,14 +44,20 @@
     left: 30px;
 }
 .our__team-img{
+    position: relative;
     max-width: 500px;
-    overflow: hidden;
 }
 .our__team-img>img{
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.ellips-img{
+    position: absolute;
+    left: 30%;
+    top: 60%;
+    clip-path: circle(46% at 49% 50%);
 }
 
 @media(max-width: 768px){
